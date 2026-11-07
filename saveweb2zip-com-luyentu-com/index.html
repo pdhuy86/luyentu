@@ -1,0 +1,355 @@
+<!DOCTYPE html><html lang="vi"><head>
+    <meta charset="utf-8">
+    <!-- Script đo lường (GA, TikTok, Clarity) nạp SAU sự kiện load để không giành
+         băng thông/CPU với lúc vẽ trang (~1s CPU trên điện thoại, 2 bản gtag.js ~180KB).
+         Lệnh gọi trước đó vẫn vào hàng đợi (dataLayer / ttq / clarity.q) nên không mất.
+         Ngoại lệ: URL có ttclid/utm/gclid/fbclid (vào từ quảng cáo) thì nạp ngay, để SDK
+         đọc được tham số trước khi SPA chuyển trang làm mất query. -->
+    <script async="" src="https://www.clarity.ms/tag/yse4mvg9yh"></script><script type="text/javascript" async="" src="js/events.js"></script><script>
+      (function () {
+        var fromAd = /[?&](ttclid|gclid|fbclid|utm_[a-z]+)=/i.test(location.search);
+        window.__afterPageLoad = function (fn) {
+          if (fromAd) return fn();
+          var run = function () { setTimeout(fn, 0); };
+          if (document.readyState === "complete") run();
+          else window.addEventListener("load", run, { once: true });
+        };
+      })();
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script>
+      window.__afterPageLoad(function () {
+        var s = document.createElement("script");
+        s.async = true;
+        s.src = "https://www.googletagmanager.com/gtag/js?id=G-E8X6S8BDQ4";
+        document.head.appendChild(s);
+      });
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-E8X6S8BDQ4");
+      // Property luyentu-72bc8 (chung voi app Android/iOS); gtag gui moi su kien toi ca hai ID
+      gtag("config", "G-SM08G31GZS");
+    </script>
+    <!-- TikTok Pixel: chỉ nạp khi build có VITE_TIKTOK_PIXEL_ID (xem .env.production) -->
+    <script>
+      (function () {
+        var pixelId = "DB15IPRC77UA626EE4J0";
+        if (!pixelId || pixelId.charAt(0) === "%") return;
+        !function (w, d, t) {
+          w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var u=r+"?sdkid="+e+"&lib="+t;w.__afterPageLoad(function(){var n=d.createElement("script");n.type="text/javascript",n.async=!0,n.src=u;var f=d.getElementsByTagName("script")[0];f.parentNode.insertBefore(n,f)})};
+          ttq.load(pixelId);
+          ttq.page();
+        }(window, document, 'ttq');
+      })();
+    </script>
+    <!-- Microsoft Clarity (heatmap, ghi lại phiên): chỉ nạp khi build có VITE_CLARITY_PROJECT_ID -->
+    <script>
+      (function () {
+        var projectId = "yse4mvg9yh";
+        if (!projectId || projectId.charAt(0) === "%") return;
+        (function (c, l, a, r, i, t, y) {
+          c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+          c.__afterPageLoad(function () {
+            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+          });
+        })(window, document, "clarity", "script", projectId);
+      })();
+    </script>
+    <link rel="preconnect" href="https://luyentu.com" crossorigin="">
+    <link rel="dns-prefetch" href="https://luyentu.com">
+    <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin="">
+    <link rel="dns-prefetch" href="https://static.cloudflareinsights.com">
+    <link rel="preload" href="images/logoweb-sm.webp" as="image">
+    <!-- Ảnh bìa video là LCP của landing: preload ngay khi đọc HTML (không đợi JS),
+         chỉ ở trang chủ. srcset/sizes phải khớp tutorialThumbnail trong src/constants/tutorial.js -->
+    <script>
+      (function () {
+        if (location.pathname !== "/") return;
+        var l = document.createElement("link");
+        l.rel = "preload";
+        l.as = "image";
+        l.href = "/images/landing-page/tutorial-640w.webp";
+        l.setAttribute("imagesrcset", "/images/landing-page/tutorial-480w.webp 480w, /images/landing-page/tutorial-640w.webp 640w, /images/landing-page/tutorial-960w.webp 960w");
+        l.setAttribute("imagesizes", "(max-width: 768px) 86vw, 560px");
+        l.setAttribute("fetchpriority", "high");
+        document.head.appendChild(l);
+      })();
+    </script>
+    <link rel="icon" type="image/webp" href="images/logoweb.webp">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon-180x180.png">
+    <link rel="manifest" href="js/manifest.json">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#2563EB">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Luyện Từ">
+    <style>
+      :root {
+        color-scheme: light;
+      }
+      body {
+        margin: 0;
+        background: #f9fafb;
+        color: #1e1b4b;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      }
+      #root {
+        min-height: 100vh;
+      }
+      .landing-hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding-top: 7rem;
+        padding-bottom: 4rem;
+        background: linear-gradient(
+          135deg,
+          #eef2ff 0%,
+          #e0e7ff 30%,
+          #f5f3ff 60%,
+          #fefce8 100%
+        );
+      }
+      .landing-hero h1 {
+        margin: 0 0 1rem;
+        font-size: clamp(2.4rem, 3.4vw, 3.6rem);
+        font-weight: 800;
+        line-height: 1.2;
+        color: #1e1b4b;
+      }
+      .landing-hero p {
+        margin: 0;
+        font-size: 1.125rem;
+        line-height: 1.7;
+        color: #374151;
+      }
+      @media (max-width: 768px) {
+        .landing-hero {
+          padding-top: 6rem;
+        }
+      }
+    </style>
+
+    <title data-rh="true">Học từ vựng tiếng Anh miễn phí | Luyện Từ</title>
+    <meta data-rh="true" name="description" content="Luyện Từ - website học từ vựng tiếng Anh online miễn phí #1 Việt Nam. Flashcard thông minh, Spaced Repetition, lộ trình TOEIC IELTS và game luyện tập. 100.000+ người tin dùng.">
+    <meta data-rh="true" name="keywords" content="học từ vựng tiếng Anh, flashcard tiếng Anh, spaced repetition, ôn thi TOEIC, ôn thi IELTS, game học từ vựng, luyện từ">
+    <meta name="author" content="Luyện Từ - luyentu.com">
+    <meta data-rh="true" name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <link data-rh="true" rel="canonical" href="https://luyentu.com/">
+
+    <meta data-rh="true" property="og:type" content="website">
+    <meta data-rh="true" property="og:url" content="https://luyentu.com/">
+    <meta data-rh="true" property="og:title" content="Học từ vựng tiếng Anh miễn phí | Luyện Từ">
+    <meta data-rh="true" property="og:description" content="Website học từ vựng tiếng Anh miễn phí #1 Việt Nam. Flashcard thông minh, SRS và lộ trình TOEIC IELTS giúp bạn ghi nhớ lâu hơn gấp 3 lần.">
+    <meta data-rh="true" property="og:image" content="images/logoweb.webp">
+    <meta data-rh="true" property="og:image:alt" content="Luyện Từ">
+    <meta data-rh="true" property="og:locale" content="vi_VN">
+    <meta data-rh="true" property="og:site_name" content="Luyện Từ">
+
+    <meta data-rh="true" name="twitter:card" content="summary_large_image">
+    <meta data-rh="true" name="twitter:url" content="https://luyentu.com/">
+    <meta data-rh="true" name="twitter:title" content="Học từ vựng tiếng Anh miễn phí | Luyện Từ">
+    <meta data-rh="true" name="twitter:description" content="Website học từ vựng tiếng Anh miễn phí #1 Việt Nam. Flashcard thông minh, SRS và lộ trình TOEIC IELTS trên Luyện Từ.">
+    <meta data-rh="true" name="twitter:image" content="images/logoweb.webp">
+
+    <meta name="geo.region" content="VN">
+    <meta name="geo.placename" content="Vietnam">
+    <meta name="content-language" content="vi">
+    <meta http-equiv="content-language" content="vi">
+    <script type="module" src="js/index.BkJInB1U.js"></script>
+    <link rel="stylesheet" crossorigin="" href="css/index.DUjFQJHJ.css">
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-E8X6S8BDQ4"></script></head>
+
+  <body>
+    <div id="root">
+      <div style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 100vh;
+          background: #f9fafb;
+          flex-direction: column;
+          gap: 16px;
+        ">
+        <div style="
+            width: 48px;
+            height: 48px;
+            border: 4px solid #e2e8f0;
+            border-top-color: #2563eb;
+            border-radius: 50%;
+            animation: sp 0.8s linear infinite;
+          "></div>
+        <p style="
+            color: #718096;
+            font-size: 14px;
+            font-weight: 500;
+            font-family:
+              -apple-system, BlinkMacSystemFont, " segoe="" ui",="" roboto,="" sans-serif;="" margin:="" 0;="" "="">
+          Đang tải dữ liệu...
+        </p>
+      </div>
+      <style>
+        @keyframes sp {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+      </style>
+    </div>
+    <noscript>
+      <div
+        style="
+          max-width: 800px;
+          margin: 40px auto;
+          padding: 20px;
+          font-family: sans-serif;
+          line-height: 1.7;
+        "
+      >
+        <h1>Luyện Từ - Học từ vựng tiếng Anh miễn phí online</h1>
+        <p>
+          Luyện Từ là nền tảng học từ vựng tiếng Anh miễn phí hàng đầu Việt Nam
+          với hơn 100.000 người dùng. Sử dụng phương pháp Flashcard thông minh
+          kết hợp Spaced Repetition (lặp lại ngắt quãng) giúp bạn ghi nhớ từ
+          vựng tiếng Anh hiệu quả hơn gấp 3 lần so với phương pháp truyền thống.
+        </p>
+        <h2>Tính năng nổi bật</h2>
+        <ul>
+          <li>
+            Flashcard thông minh với Spaced Repetition - ôn tập đúng thời điểm,
+            ghi nhớ lâu hơn
+          </li>
+          <li>
+            Lộ trình học TOEIC từ 450 đến 990 điểm - bộ từ vựng phân theo level
+          </li>
+          <li>Lộ trình học IELTS Academic và General - từ band 5.0 đến 8.0+</li>
+          <li>
+            6 game luyện tập từ vựng tương tác: Memory Match, Word Scramble,
+            Listening Challenge và nhiều hơn
+          </li>
+          <li>AI hỗ trợ tạo bộ từ vựng cá nhân theo chủ đề bạn chọn</li>
+          <li>
+            Thống kê chi tiết tiến độ học tập với biểu đồ Streak hàng ngày
+          </li>
+          <li>Hỗ trợ đa nền tảng: điện thoại, máy tính bảng và máy tính</li>
+          <li>
+            Kho từ vựng phong phú: TOEIC, IELTS, SAT, THPT, Cambridge, Oxford
+            3000
+          </li>
+        </ul>
+        <h2>Học từ vựng hiệu quả với Spaced Repetition</h2>
+        <p>
+          Spaced Repetition (SRS) là phương pháp ôn tập ngắt quãng dựa trên
+          nghiên cứu khoa học về trí nhớ. Thay vì học nhồi nhét, hệ thống sẽ tự
+          động nhắc bạn ôn lại từ vựng vào đúng thời điểm bạn sắp quên, giúp
+          chuyển từ vựng từ trí nhớ ngắn hạn sang trí nhớ dài hạn một cách tự
+          nhiên.
+        </p>
+        <h2>Câu hỏi thường gặp</h2>
+        <h3>Luyện Từ có miễn phí không?</h3>
+        <p>
+          Có. Bạn có thể học từ vựng, luyện tập với flashcard và game miễn phí
+          trên Luyện Từ.
+        </p>
+        <h3>Luyện Từ có hỗ trợ TOEIC và IELTS không?</h3>
+        <p>
+          Có. Nền tảng cung cấp bộ từ vựng và lộ trình phù hợp cho người học
+          TOEIC và IELTS.
+        </p>
+        <h3>Tôi có thể học trên điện thoại không?</h3>
+        <p>
+          Có. Luyện Từ hoạt động tốt trên điện thoại, máy tính bảng và máy tính
+          với giao diện responsive.
+        </p>
+        <p>
+          Vui lòng bật JavaScript để sử dụng đầy đủ ứng dụng Luyện Từ.
+          <a href="https://luyentu.com/register">Đăng ký miễn phí</a>
+          hoặc
+          <a href="https://luyentu.com/login">đăng nhập</a>.
+        </p>
+      </div>
+    </noscript>
+    <script>
+      (() => {
+        if (!("serviceWorker" in navigator)) return;
+
+        const isProd = "production" === "production";
+        const devCleanupKey = "luyentu-dev-sw-cleaned";
+        const cleanupDevServiceWorkers = async () => {
+          try {
+            const registrations =
+              await navigator.serviceWorker.getRegistrations();
+            const hadRegistrations = registrations.length > 0;
+
+            if (navigator.serviceWorker.controller) {
+              navigator.serviceWorker.controller.postMessage({
+                type: "CLEAR_CACHE",
+              });
+            }
+
+            await Promise.all(
+              registrations.map((registration) => registration.unregister()),
+            );
+
+            if ("caches" in window) {
+              const cacheKeys = await caches.keys();
+              await Promise.all(
+                cacheKeys
+                  .filter((key) => key.startsWith("luyentu-cache-"))
+                  .map((key) => caches.delete(key)),
+              );
+            }
+
+            if (hadRegistrations && !sessionStorage.getItem(devCleanupKey)) {
+              sessionStorage.setItem(devCleanupKey, "1");
+              window.location.reload();
+              return;
+            }
+
+            sessionStorage.removeItem(devCleanupKey);
+          } catch (error) {
+            console.log("SW cleanup failed in dev:", error);
+          }
+        };
+
+        if (!isProd) {
+          cleanupDevServiceWorkers();
+          return;
+        }
+
+        window.addEventListener("load", () => {
+          sessionStorage.removeItem(devCleanupKey);
+
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then((registration) => {
+              console.log("SW registered:", registration.scope);
+            })
+            .catch((error) => {
+              console.log("SW registration failed:", error);
+            });
+        });
+      })();
+    </script>
+    <script>
+      window.addEventListener("load", () => {
+        if (window.__disableCfBeacon) return;
+        if (!window.__cfBeaconToken) return;
+        const script = document.createElement("script");
+        script.defer = true;
+        script.src = "https://static.cloudflareinsights.com/beacon.min.js";
+        script.dataset.cfBeacon = JSON.stringify({
+          token: window.__cfBeaconToken,
+        });
+        document.head.appendChild(script);
+      });
+    </script>
+  
+
+</body></html>
